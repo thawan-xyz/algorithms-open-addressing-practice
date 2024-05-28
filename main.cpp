@@ -82,7 +82,7 @@ public:
 
     void print() {
         for (int i = 0; i < hashTableSize; ++i) {
-            cout << "OpenAddressing [" << i << "] =";
+            cout << "OpenAddressing[" << i << "] =";
             if (hashTable[i].first != emptyKey && hashTable[i].first != deletedKey) {
                 cout << " {" << hashTable[i].first << ", " << hashTable[i].second << "}";
             }
@@ -98,7 +98,6 @@ public:
 
     void clear() {
         numElements = 0;
-        hashTable = new pair<T, E>[L];
         for (int i = 0; i < L; ++i) {
             hashTable[i].first = emptyKey;
         }
@@ -110,11 +109,12 @@ private:
     T emptyKey;
     T deletedKey;
     pair<T, E>* hashTable;
+
     vector<int>* permutationArray;
 
     int hashFunction(T key) {
         int modulus = key % hashTableSize;
-        return modulus < 0 ? modulus + 14 : modulus;
+        return modulus < 0 ? modulus + hashTableSize : modulus;
     }
 };
 
