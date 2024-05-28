@@ -82,7 +82,10 @@ public:
 
     void print() {
         for (int i = 0; i < hashTableSize; ++i) {
-            cout << "OpenAddressing [" << i << "] = {" << hashTable[i].first << ", " << hashTable[i].second << "}";
+            cout << "OpenAddressing [" << i << "] =";
+            if (hashTable[i].first != emptyKey && hashTable[i].first != deletedKey) {
+                cout << " {" << hashTable[i].first << ", " << hashTable[i].second << "}";
+            }
         }
     }
 
