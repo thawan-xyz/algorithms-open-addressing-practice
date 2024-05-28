@@ -25,12 +25,12 @@ public:
     }
 
     void insert(T key, E value) {
-        if (hashTableSize < numElements && !find(key).has_value()) {
+        if (numElements < hashTableSize && !find(key).has_value()) {
             int hashPosition = hashFunction(key);
             int newHashPosition = hashPosition;
 
             if (hashTable[hashPosition].first != emptyKey && hashTable[hashPosition].first != deletedKey) {
-                for (int i = 0; i < hashTableSize - 1 && hashTable[newHashPosition] != emptyKey && hashTable[newHashPosition] != deletedKey; ++i) {
+                for (int i = 0; i < hashTableSize - 1 && hashTable[newHashPosition].first != emptyKey && hashTable[newHashPosition].first != deletedKey; ++i) {
                     newHashPosition = (hashPosition + permutationArray->at(i)) % hashTableSize;
                 }
                 hashPosition = newHashPosition;
@@ -47,8 +47,8 @@ public:
 
         for (int i = 0; i < hashTableSize - 1 && hashTable[newHashPosition].first != emptyKey; ++i) {
             if (hashTable[newHashPosition].first == key) {
-                hashTable[newHashPosition].first = deletedKey;
                 E tempValue = hashTable[newHashPosition].second;
+                hashTable[newHashPosition].first = deletedKey;
                 numElements--;
                 return tempValue;
             }
@@ -86,6 +86,7 @@ public:
             if (hashTable[i].first != emptyKey && hashTable[i].first != deletedKey) {
                 cout << " {" << hashTable[i].first << ", " << hashTable[i].second << "}";
             }
+            cout << "\n";
         }
     }
 
@@ -115,8 +116,8 @@ private:
         int modulus = key % hashTableSize;
         return modulus < 0 ? modulus + 14 : modulus;
     }
-
 };
+
 int main() {
     return 0;
 }
